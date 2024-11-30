@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Dashpanel</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+    <header class="dark-header">
+        <h1>Симулятор админ-панели</h1>
+        <p>Некоторые из функций и их упрощенное отображение. Установите приложение и аутентифицируйтесь, чтобы раскрыть все возможности.</p>
+    </header>
+
+    <main>
+        <section id="features-preview" class="grid-container">
+            <h2>Функции</h2>
+            <ul class="grid-list">
+                <li>Просмотр логов</li>
+                <li>Статистика</li>
+                <li>Удаленное управление</li>
+            </ul>
+        </section>
+
+        <section id="login-section" class="center-content">
+            <h2>Вход</h2>
+            <p>Войдите, нажав на кнопку ниже.</p>
+            <a href="/secure/dashpanelda.html" class="btn">Войти</a>
+        </section>
+
+        <section id="summary" class="grid-container">
+            <h2>Обзор</h2>
+            <div class="grid-cards">
+                <div class="summary-card">
+                    <h3>Всего правил брандмауэра</h3>
+                    <p id="rule-count">{{ rule_count }}</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Всего логов</h3>
+                    <p id="log-count">{{ log_count }}</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="recent-logs" class="grid-container">
+            <h2>Последние логи</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Время</th>
+                        <th>IP</th>
+                        <th>Действие</th>
+                        <th>Агент</th>
+                        <th>Гео</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dynamic content -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer class="dark-footer">
+        <p>&copy; 2024 <a href="mailto:support@kalinux.org.ru">Contact Support</a></p>
+    </footer>
+
+    <div class="bottom-menu">
+        <a href="#" class="bottom-menu-item" id="menu-button">
+            <img src="/static/images/menu-icon.png" alt="Menu Icon">
+        </a>
+    </div>
+
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="popup-menu">
+            <button id="close-button" class="close-button">Закрыть</button>
+            <ul>
+                <li><a href="/secure/dashpanelda.html">Войти...</a></li>
+                <li><a href="/letsgoauth">Пройти авторизацию...</a></li>
+                <li><a href="/tutorial">Помощь</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="/static/js/dashpanel.js"></script>
+</body>
+</html>

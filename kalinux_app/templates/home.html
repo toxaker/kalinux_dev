@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalinux | Security</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div class="container" id="app">
+    <header>
+        <div class="header-container">
+            <h1>Kalinux | Security</h1>
+        </div>   
+    </header>
+            <div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="https://github.com/toxaker/kalinux-development/blob/main/akalia_dev/documentation.md">📚 Документация</a></li>
+                </ul>
+                <ul class="menu">
+                    <li><a href="/webdownload">🔥 Быстрый старт</a></li>
+                </ul>
+            </nav>
+            </div>
+            <div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="/secure/firewallbuilder.html">🛡 Файрвол-Бот</a></li>
+                </ul>
+                <ul class="menu">
+                    <li><a href="/dashpanel">📊 Админ Панель</a></li>
+                </ul>
+            </nav>
+            </div>
+  <main>
+       <div class="section">
+        <section>
+            <h2>Добро пожаловать на стартовую страницу </h2>
+            <h2>Kalinux | Security</h2>
+            <p>На сегодняшний день единственного приложения, с комплексным и user-friendly функционалом, позволяющий вам надежно защитить ваш сервер, приложение, или иную систему Unix, с возможностью крайне гибкой кастомизации и интеграции с другими сервисами</p>
+            <button><a href="/webdownload" class="button">Начать</a></button>
+        </section>
+        </div>
+        <div class="section">
+        <section>
+            <h2>Документация</h2>
+            <p>Узнайте больше о наших функциях и возможностях в нашей подробной документации.</p>
+            <button><a href="https://github.com/toxaker/kalinux-development/blob/main/akalia_dev/documentation.md" class="button">Читать</a></button>
+        </section>
+        </div>
+        <div class="section">
+        <section>
+            <h3>Ссылки на ресурсы</h3>
+                <button><a href="https://github.com/toxaker" class="buttton">GitHub</a></button>
+                <button><a href="https://gitlab.com/aka_toxaker" class="button">GitLab</a></button>
+                <button><a href="https://t.me/kalidev_securitybot/gui_interface" class="button">Приложение в Telegram</a></button>
+        </section>
+        </div>
+        <div class="section">
+        <section>
+            <h3>Предпросмотр Панели Управления</h3>
+            <p>Получите доступ к демо-версии информационной панели для базового мониторинга и инструментов.</p>
+                <button><a href="/dashpanel" class="button">Перейти</a></button>
+                <button><a href="/webdownload" class="button">Установить</a></button>
+        </section>
+        </div>
+  </main>
+    <footer>
+      <p>&copy; 2024 Kalinux Development </p>
+  <script src="/static/js/home.js"></script>
+ </body>
+     </footer>
+ <div class="bottom-menu">
+    <a href="#" class="bottom-menu-item" id="menu-button">
+    <img src="/static/images/5.png" alt="Menu Icon">
+  </a>
+ </div>
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-menu" id="popup-menu">
+    <button id="close-button" class="close-button">Закрыть</button> 
+    <ul>
+       <li><a href="/secure/dashpanelda.html">Войти...</a></li>
+       <li><a href="/letsgoauth">Пройти авторизацию...</a></li>
+       <li><a href="/tutorial">Помощь</a></li>
+    </ul>
+<script>
+const menuButton = document.getElementById('menu-button');
+const menuOverlay = document.getElementById('popup-overlay');
+const closeButton = document.getElementById('close-button');
+
+// Open the menu
+menuButton.addEventListener('click', () => {
+  menuOverlay.classList.add('active'); // Show the popup
+});
+
+// Close the menu when clicking the "Close" button
+closeButton.addEventListener('click', () => {
+  menuOverlay.classList.remove('active'); // Hide the popup
+});
+
+// Close the menu when clicking outside the popup
+menuOverlay.addEventListener('click', (e) => {
+  if (e.target === menuOverlay) {
+    menuOverlay.classList.remove('active'); // Hide the popup
+  }
+});
+</script>
+   </div>
+ </div>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalinux | Web Tools</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/tools.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="dark-header">
+        <h1>Сетевые инструменты</h1>
+        <p>Используйте наши инструменты для анализа сети и управления правилами безопасности.</p>
+    </header>
+
+    <main>
+        <section id="tools-categories" class="grid-container">
+            <h2>Категории инструментов</h2>
+            <nav class="animated-menu">
+                <ul class="menu">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/toolsmenu">Инструменты</a></li>
+                    <li><a href="/scantools">Инструменты для сканирования</a></li>
+                    <li><a href="/advancedtools">Продвинутые</a></li>
+                </ul>
+            </nav>
+        </section>
+
+        <section id="port-scanner" class="grid-container">
+            <h2>Сканирование портов</h2>
+            <form id="portScannerForm" class="tool-form">
+                <label for="ip">Введите IP-адрес или домен:</label>
+                <input type="text" id="ip" name="ip" required placeholder="e.g., 192.168.0.1">
+                <button type="submit" class="btn">Сканировать порты</button>
+            </form>
+            <div id="scanResult" class="result-container"></div>
+        </section>
+
+        <section id="firewall-rules" class="grid-container">
+            <h2>Firewall Rule Manager</h2>
+            <div class="tool-form">
+                <form id="add-rule-form">
+                    <label for="ip-add">Добавить IP в блокировку:</label>
+                    <input type="text" id="ip-add" name="ip" required placeholder="Enter IP to block">
+                    <button type="submit" class="btn">Add Rule</button>
+                </form>
+            </div>
+            <div class="tool-form">
+                <form id="remove-rule-form">
+                    <label for="ip-remove">Удалить IP из блокировки:</label>
+                    <input type="text" id="ip-remove" name="ip" required placeholder="Enter IP to remove">
+                    <button type="submit" class="btn">Remove Rule</button>
+                </form>
+            </div>
+            <div id="alert" class="alert"></div>
+        </section>
+
+        <section id="dns-tools" class="grid-container">
+            <h2>Инструменты DNS</h2>
+            <form id="dnsLookupForm" class="tool-form">
+                <label for="dnsDomain">Введите домен для DNS Lookup:</label>
+                <input type="text" id="dnsDomain" name="domain" required placeholder="e.g., example.com">
+                <button type="submit" class="btn">Lookup DNS</button>
+            </form>
+            <div id="dnsInfo" class="result-container"></div>
+
+            <form id="reverseDnsForm" class="tool-form">
+                <label for="reverseIp">Введите IP для обратного DNS:</label>
+                <input type="text" id="reverseIp" name="ip" required placeholder="e.g., 8.8.8.8">
+                <button type="submit" class="btn">Reverse Lookup</button>
+            </form>
+            <div id="reverseDnsInfo" class="result-container"></div>
+        </section>
+
+        <section id="whois-tool" class="grid-container">
+            <h2>WHOIS Lookup</h2>
+            <form id="whoisForm" class="tool-form">
+                <label for="whoisIp">Введите IP-адрес:</label>
+                <input type="text" id="whoisIp" name="ip" required placeholder="e.g., 8.8.8.8">
+                <button type="submit" class="btn">Получить информацию</button>
+            </form>
+            <div id="whoisResult" class="result-container"></div>
+        </section>
+    </main>
+
+    <footer class="dark-footer">
+        <p>© 2024 <a href="mailto:support@kalinux.org.ru">security.kalinux.world</a>. Продукт под MIT лицензией. Авторство: <a href="https://t.me/toxakalinin">А.К.А</a>.</p>
+        <p>Исходный код доступен на <a href="https://github.com/toxaker/">GitHub</a>.</p>
+    </footer>
+
+    <script src="/static/js/tools.js"></script>
+</body>
+</html>

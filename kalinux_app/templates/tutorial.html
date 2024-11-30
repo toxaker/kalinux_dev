@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalinux | Продвинутая платформа безопасности</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/inspiration.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/static/images/favicon.png" type="image/png">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="/" class="logo">
+                <img src="/static/images/logo.svg" alt="Логотип Kalinux">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#about">О проекте</a></li>
+                    <li><a href="#features">Функции</a></li>
+                    <li><a href="#tools">Инструменты</a></li>
+                    <li><a href="#download">Скачать</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+
+        <section class="hero-section">
+            <div class="container">
+                <h1>Kalinux Security</h1>
+                <p>Самая продвинутая платформа для защиты серверов и мониторинга.</p>
+                <div class="cta-buttons">
+                    <a href="#download" class="btn btn-primary">Скачать</a>
+                    <a href="#docs" class="btn btn-secondary">Документация</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2>О Kalinux</h2>
+                <p>Kalinux Security — это продвинутая, эффективная и функциональная система безопасности для IT-специалистов, системных администраторов и пользователей UNIX.</p>
+                <ul>
+                    <li>Мониторинг системы в реальном времени</li>
+                    <li>Глубокий анализ логов</li>
+                    <li>Автоматизация с помощью fail2ban</li>
+                    <li>Сканирование уязвимостей</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="features" class="features-section">
+            <div class="container">
+                <h2>Основные функции</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Мониторинг системы</h3>
+                        <p>Отслеживайте производительность и безопасность в реальном времени.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Анализ логов</h3>
+                        <p>Анализируйте системные логи для обнаружения подозрительных действий.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Автоматизация</h3>
+                        <p>Автоматизируйте реакцию на угрозы с помощью fail2ban.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Сканирование уязвимостей</h3>
+                        <p>Используйте такие инструменты, как Lynis и Rkhunter, для полного анализа.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tools" class="tools-section">
+            <div class="container">
+                <h2>Инструменты</h2>
+                <p>Kalinux предлагает множество инструментов для тестирования безопасности, анализа уязвимостей и защиты системы.</p>
+                <div class="tool-grid">
+                    <img src="/static/images/tool1.svg" alt="Инструмент 1">
+                    <img src="/static/images/tool2.svg" alt="Инструмент 2">
+                    <img src="/static/images/tool3.svg" alt="Инструмент 3">
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download-section">
+            <div class="container">
+                <h2>Скачать Kalinux</h2>
+                <p>Начните, скачав Kalinux для вашей предпочтительной среды.</p>
+                <a href="/download" class="btn btn-primary">Скачать сейчас</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Kalinux | Безопасность. Поддержка: <a href="mailto:kalinux@hacking.net.ru">Свяжитесь с нами</a></p>
+    </footer>
+
+    <div class="bottom-menu">
+        <a href="#" class="bottom-menu-item" id="menu-button" aria-label="Открыть меню">
+            <img src="/static/images/5.png" alt="Иконка меню">
+        </a>
+    </div>
+
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="popup-menu" id="popup-menu">
+            <button id="close-button" class="close-button">Закрыть</button>
+            <ul>
+                <li><a href="/secure/dashpanelda.html">Войти...</a></li>
+                <li><a href="/letsgoauth">Пройти авторизацию...</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const menuButton = document.getElementById('menu-button');
+        const menuOverlay = document.getElementById('popup-overlay');
+        const closeButton = document.getElementById('close-button');
+
+        // Открыть меню
+        menuButton.addEventListener('click', () => {
+            menuOverlay.classList.add('active'); // Показать всплывающее окно
+        });
+
+        // Закрыть меню при нажатии на "Закрыть"
+        closeButton.addEventListener('click', () => {
+            menuOverlay.classList.remove('active'); // Скрыть всплывающее окно
+        });
+
+        // Закрыть меню при нажатии вне области меню
+        menuOverlay.addEventListener('click', (e) => {
+            if (e.target === menuOverlay) {
+                menuOverlay.classList.remove('active'); // Скрыть всплывающее окно
+            }
+        });
+    </script>
+</body>
+</html>

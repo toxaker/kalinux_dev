@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/fwallbot.css">
+    <title>Firewall Builder</title>
+</head>
+<body>
+    <h1>Firewall Builder</h1>
+  <nav>
+      <a href="#add-rule-form">Добавить правило</a>
+    <!-- Add Rule Form -->
+    <form id="add-rule-form">
+        <h2>Add New Rule</h2>
+        <label for="direction">Direction:</label>
+        <input type="text" id="direction" name="direction" placeholder="e.g., IN/OUT" required>
+
+        <label for="protocol">Protocol:</label>
+        <input type="text" id="protocol" name="protocol" placeholder="e.g., TCP/UDP" required>
+
+        <label for="source_ip">Source IP:</label>
+        <input type="text" id="source_ip" name="source_ip" placeholder="e.g., 192.168.1.1">
+
+        <label for="source_port">Source Port:</label>
+        <input type="text" id="source_port" name="source_port" placeholder="e.g., 80">
+
+        <label for="destination_ip">Destination IP:</label>
+        <input type="text" id="destination_ip" name="destination_ip" placeholder="e.g., 10.0.0.1">
+
+        <label for="destination_port">Destination Port:</label>
+        <input type="text" id="destination_port" name="destination_port" placeholder="e.g., 443">
+
+        <button type="submit">Add Rule</button>
+        <div class="spinner" id="add-spinner"></div>
+        <div id="add-feedback" class="feedback"></div>
+    </form>
+
+    <!-- Existing Rules Table -->
+    <h2>Existing Firewall Rules</h2>
+    <table id="rules-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Direction</th>
+                <th>Protocol</th>
+                <th>Source IP</th>
+                <th>Source Port</th>
+                <th>Destination IP</th>
+                <th>Destination Port</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tbody>
+            {% for rule in rules %}
+            <tr id="rule-{{ rule.id }}">
+                <td>{{ rule.id }}</td>
+                <td>{{ rule.direction }}</td>
+                <td>{{ rule.protocol }}</td>
+                <td>{{ rule.source_ip }}</td>
+                <td>{{ rule.source_port }}</td>
+                <td>{{ rule.destination_ip }}</td>
+                <td>{{ rule.destination_port }}</td>
+                <td>
+                    <button class="delete-rule-btn" data-id="{{ rule.id }}">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- JavaScript -->
+    <script>
+        const addForm = document.getElementById('add-rule-form');
+        const rulesTable = document.getElementById('rules-table').querySelector('tbody');
+        const addSpinner = document.getElementById('add-spinner');
+        const addFeedback = document.getElementById('add-feedback');
+
+        // Add Rule
+        addForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            addSpinner.style.display = 'block';
+            addFeedback.textContent = '';
+            const formData = new FormData(addForm);
+
+            try {
+                const response = await fetch('/firewallbuilder', { method: 'POST', body: formData });
+                addSpinner.style.display = 'none';
+
+                if (response.ok) {
+                    const newRule = await response.json();
+                    const newRow = document.createElement('tr');
+                    newRow.id = `rule-${newRule.id}`;
+                    newRow.innerHTML = `
+                        <td>${newRule.id}</td>
+                        <td>${newRule.direction}</td>
+                        <td>${newRule.protocol}</td>
+                        <td>${newRule.source_ip}</td>
+                        <td>${newRule.source_port}</td>
+                        <td>${newRule.destination_ip}</td>
+                        <td>${newRule.destination_port}</td>
+                        <td>
+                            <button class="delete-rule-btn" data-id="${newRule.id}">Delete</button>
+                        </td>
+                    `;
+                   newRow.classList.add('highlight');
+                    rulesTable.appendChild(newRow);
+                    addForm.reset();
+                    addFeedback.textContent = 'Rule added successfully!';
+                    addFeedback.className = 'feedback success';
+                } else {
+                    throw new Error('Failed to add rule.');
+                }
+            } catch (error) {
+                addSpinner.style.display = 'none';
+                addFeedback.textContent = error.message;
+                addFeedback.className = 'feedback error';
+            }
+        });
+
+        // Delete Rule
+        rulesTable.addEventListener('click', async (e) => {
+            if (e.target.classList.contains('delete-rule-btn')) {
+                const ruleId = e.target.dataset.id;
+                const row = document.getElementById(`rule-${ruleId}`);
+
+                try {
+                    const response = await fetch(`/firewallbuilder/${ruleId}`, { method: 'DELETE' });
+
+                    if (response.ok) {
+                        row.classList.add('fade-out');
+                        setTimeout(() => row.remove(), 1000);
+                    } else {
+                        alert('Failed to delete rule.');
+                    }
+                } catch (error) {
+                    alert('Error deleting rule.');
+                }
+            }
+        });
+    </script>
+    <script src="/static/js/firewall.js"></script>
+</body>
+ <div class="bottom-menu">
+    <a href="#" class="bottom-menu-item" id="menu-button">
+    <img src="/static/images/5.png" alt="Menu Icon">
+  </a>
+ </div>
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-menu" id="popup-menu">
+    <button id="close-button" class="close-button">Закрыть</button> 
+    <ul>
+       <li><a href="/secure/dashpanelda.html">Сервер-бот</a></li>
+       <li><a href="/secure/tooldmenu.html">Инструменты</a></li>
+       <li><a href="/tutorial">Помощь</a></li>
+       <li><a href="/">Выход</a></li>
+    </ul>
+<script>
+const menuButton = document.getElementById('menu-button');
+const menuOverlay = document.getElementById('popup-overlay');
+const closeButton = document.getElementById('close-button');
+
+// Open the menu
+menuButton.addEventListener('click', () => {
+  menuOverlay.classList.add('active'); // Show the popup
+});
+
+// Close the menu when clicking the "Close" button
+closeButton.addEventListener('click', () => {
+  menuOverlay.classList.remove('active'); // Hide the popup
+});
+
+// Close the menu when clicking outside the popup
+menuOverlay.addEventListener('click', (e) => {
+  if (e.target === menuOverlay) {
+    menuOverlay.classList.remove('active'); // Hide the popup
+  }
+});
+</script>
+   </div>
+ </div>
+</html>

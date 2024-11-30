@@ -1,22 +1,4 @@
-# Kalinux | ORG | Development | World | RU
----
-#### Here is one of many devs built by Kalinux.
----
-#### Pre-configured apps&amp;tools package, providing optimal, easy to use, security setups for beginners;
----
-#### On the other hand, it’s scalable, edit&amp;customize available till advanced security protection for users, who knows what actually they are doing or want to do.
----
-#### Actually, for now its just a copy of documentation, but i will edit it with time.
----
-
-![IMG_0609](https://github.com/user-attachments/assets/5c0dea2d-7e16-4858-a6bb-e14cc5711638)
-
-
-
-# **Kalinux Security| Documentation**
-
-! A little remark - i have not tested it properly yet, because still gotta complete firewall and few other sections. Also, i expect you using debian or debian based . Testing  for other OS will take time.
----
+# **Kalinux Security | Documentation**
 
 ### **Table of Contents**
 1. [Project Overview](#project-overview)
@@ -25,11 +7,11 @@
 4. [Contributing](#contributing)
 5. [Server Configuration Guide](#configuring-your-server)
 6. [Additional sources](#useful-reading)
----
 
 ---
+
 ## **Project Overview**
----
+
 The **Kalinux Security** project is a multifunctional web application designed for:
 
 - **System administrators**  
@@ -43,12 +25,11 @@ The **Kalinux Security** project is a multifunctional web application designed f
 - Works seamlessly across desktops and mobile devices.
 
 ### **Current Domain**:  
-[**kalinux-development.net.ru**](http://kalinux-development.net.ru)
----
+[**kalinux-development.net.ru**](https://kalinux-development.net.ru/)
 
 ---
+
 ## **Technologies Used**
----
 
 | **Technology**       | **Purpose**                              |
 |-----------------------|------------------------------------------|
@@ -62,9 +43,7 @@ The **Kalinux Security** project is a multifunctional web application designed f
 
 ---
 
----
 ## **Workflow**
----
 
 ### **Completed Tasks**
 
@@ -79,13 +58,14 @@ The **Kalinux Security** project is a multifunctional web application designed f
    - User data logging (IP, geolocation, actions) for UX analysis and security improvements.
 5. **SSL Setup**:
    - SSL certificates and network traffic protection rules configured.
+
 ---
 
-### **Slightly deeper digging into more serious complexity of security configurations**
 ---
-#### ! This section is NOT ready and currently UNUSABLE for now, gonna update asap
 
-#### **iptables Rules**:
+**Slightly deeper digging into more serious complexity of security configurations**
+
+### **iptables Rules**:
 
 ```bash
 # Allow SSH (rate limited to prevent brute force)
@@ -162,9 +142,7 @@ limiter = Limiter(get_remote_address, app=app, default_limits=["100 per minute"]
 
 ---
 
----
 ## **Configuring Your Server**
----
 
 ### **Step-by-Step Guide**
 
@@ -223,9 +201,7 @@ limiter = Limiter(get_remote_address, app=app, default_limits=["100 per minute"]
 
 ---
 
----
 ## **Useful Reading**
----
 - [Flask Documentation](https://flask.palletsprojects.com/)
 - [iptables Tutorial](https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands)
 - [Telegram Bot API](https://core.telegram.org/bots/api)

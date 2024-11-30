@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalinux | Security</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>>
+<body>
+    <header class="animated-header">
+        <div class="header-content">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Логотип сайта" class="logo">
+            <h1>Инструменты сканирования</h1>
+        </div>
+    </header>
+ <main>
+        <div class="content">
+    <nav class="animated-menu">
+        <ul class="menu">
+            <li><a href="/webtools">Сетевые инструменты</a></li>
+            <li><a href="/advancedtools">Продвинутые</a></li>
+            <li><a href="/toolsmenu">Инструменты</a></li>
+            <li><a href="https://security.kalinux.world/">Главная</a></li>
+        </ul>
+    </nav>
+        </div>
+    <!-- Форма сканирования портов -->
+    <h2>Сканирование портов</h2>
+    <form id="portScannerForm">
+        <label for="ip">Введите IP-адрес или домен:</label>
+        <input type="text" id="ip" name="ip" required>
+        <button type="submit">Сканировать порты</button>
+    </form>
+    <div id="scanResult"></div>
+</div>
+
+<div class="container">
+    <!-- IP Information Lookup -->
+    <h2>IP Information Lookup</h2>
+    <form id="ipForm">
+        <label for="ipInput">Введите IP (или оставьте пустым для вашего IP):</label><br>
+        <input type="text" id="ipInput" name="ip" placeholder="8.8.8.8"><br><br>
+        <button type="submit">Получить информацию</button>
+    </form>
+    <div id="ipInfoResult"></div>
+</div>
+
+<div class="container">
+    <!-- Форма DNS Lookup -->
+    <h2>DNS Скан</h2>
+    <form id="dnsLookupForm">
+        <label for="dnsDomain">Введите домен:</label>
+        <input type="text" id="dnsDomain" name="domain" required>
+        <button type="submit">Сканировать DNS</button>
+    </form>
+    <div id="dnsInfo"></div>
+
+    <!-- Форма Reverse DNS Lookup -->
+    <h2>Реверсивный скан DNS</h2>
+    <form id="reverseDnsForm">
+        <label for="reverseIp">Введите IP-адрес:</label>
+        <input type="text" id="reverseIp" name="ip" required>
+        <button type="submit">Сканировать DNS</button>
+    </form>
+    <div id="reverseDnsInfo"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function displayError(errorMessage, elementId) {
+        document.getElementById(elementId).innerHTML = `<div class="error">${errorMessage}</div>`;
+    }
+
+    function displayLoader(elementId) {
+        document.getElementById(elementId).innerHTML = `<div class="loading">Загрузка...</div>`;
+    }
+
+    function handleFormSubmit(formId, endpoint, resultId, renderFunction) {
+        document.getElementById(formId).addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById(formId));
+            const data = Object.fromEntries(formData.entries());
+
+            displayLoader(resultId);
+
+            fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    displayError(`Ошибка: ${data.error}`, resultId);
+                } else {
+                    renderFunction(data, resultId);
+                }
+            })
+            .catch(error => {
+                displayError(`Error: ${error.message}`, resultId);
+            });
+        });
+    }
+
+    // Функции для рендеринга данных
+    function renderIpInfo(data, resultId) {
+        document.getElementById(resultId).innerHTML = `
+            <h3>IP Info:</h3>
+            <p><strong>IP:</strong> ${data.ip}</p>
+            <p><strong>City:</strong> ${data.city}</p>
+            <p><strong>Region:</strong> ${data.region}</p>
+            <p><strong>Country:</strong> ${data.country}</p>
+            <p><strong>Location:</strong> ${data.loc}</p>
+            <p><strong>ISP:</strong> ${data.org}</p>`;
+    }
+
+    function renderDnsInfo(data, resultId) {
+        document.getElementById(resultId).innerHTML = `DNS-записи: ${data.dns_records}`;
+    }
+
+    function renderReverseDnsInfo(data, resultId) {
+        document.getElementById(resultId).innerHTML = `Обратный DNS: ${data.reverse_dns}`;
+    }
+
+    function renderScanResult(data, resultId) {
+        document.getElementById(resultId).innerHTML = `Открытые порты: ${data.open_ports.join(', ')}`;
+    }
+
+    // Назначение обработчиков для всех форм
+    handleFormSubmit('ipForm', '/get_ip_info', 'ipInfoResult', renderIpInfo);
+    handleFormSubmit('dnsLookupForm', '/dns_lookup', 'dnsInfo', renderDnsInfo);
+    handleFormSubmit('reverseDnsForm', '/reverse_dns_lookup', 'reverseDnsInfo', renderReverseDnsInfo);
+    handleFormSubmit('portScannerForm', '/scan_ports', 'scanResult', renderScanResult);
+
+    // Прелоадер
+    window.onload = function() {
+        document.getElementById('preloader').style.display = 'none';
+    };
+});
+</script>
+
+<script>
+        window.addEventListener('scroll', function() {
+            if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+                document.body.classList.add('show-footer');
+            } else {
+                document.body.classList.remove('show-footer');
+            }
+        });
+    </script>
+<div class="page-footer">
+       	    <p>© 2024 security.kalinux.world. Продукт под MIT лицензией, авторство: <a href="https://t.me/toxakalinin">А.К.А</a> . Исходный код доступен на <a href="https://github.com/toxaker/">GitHub</a>
+</div>
+<div class="additional-content"></div>
+</main>
+<footer>
+        <div class="bottom-menu">
+            <a href="https://security.kalinux.world/" class="menu-item">
+                <img src="/static/appli.png" alt="App Icon">
+            </a>
+            <a href="https://security.kalinux.world/" class="menu-item">
+                <img src="/static/web.png" alt="Web Icon">
+            </a>
+            <a href="/faq" class="menu-item">
+                <img src="/static/faq.png" alt="About Icon">
+            </a>
+            <a href="/help" class="menu-item">
+                <img src="/static/help.png" alt="Help Icon">
+            </a>
+        </div>
+</footer>
+</body>
+</html>
+
+
+

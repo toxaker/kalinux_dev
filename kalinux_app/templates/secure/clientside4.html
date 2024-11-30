@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Health Dashboard</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/static/css/cliside4.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Dashboard Title -->
+    <h2>System Health Dashboard</h2>
+
+    <!-- Dashboard container with charts -->
+    <div class="dashboard-container">
+        <div class="chart-container">
+            <canvas id="cpuChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="memoryChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="diskChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="networkChart"></canvas>
+        </div>
+
+        <!-- Error message for connection issues -->
+        <div class="error-message" id="error-message">Error: Unable to connect to the server. Please check your connection.</div>
+    </div>
+
+    <script>
+        const socket = io.connect('http://localhost:5000', {
+            reconnectionAttempts: 5,
+            timeout: 2000
+        });
+
+        const errorMessage = document.getElementById('error-message');
+        socket.on('connect_error', () => {
+            errorMessage.style.display = 'block';
+        });
+
+        // Common chart options
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 600,
+                easing: 'easeOutExpo'
+            },
+            scales: {
+                x: { display: true, title: { display: true, text: 'Time' } },
+                y: { beginAtZero: true, title: { display: true, text: 'Usage (%)' } }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: "#ffffff"
+                    }
+                }
+            }
+        };
+
+        // Initialize charts
+        const cpuChart = new Chart(document.getElementById('cpuChart').getContext('2d'), {
+            type: 'line',
+            data: { labels: [], datasets: [{ label: 'CPU (%)', data: [], borderColor: '#ff6384', backgroundColor: 'rgba(255, 99, 132, 0.2)', fill: true }] },
+            options: chartOptions
+        });
+
+        const memoryChart = new Chart(document.getElementById('memoryChart').getContext('2d'), {
+            type: 'line',
+            data: { labels: [], datasets: [{ label: 'Memory (%)', data: [], borderColor: '#36a2eb', backgroundColor: 'rgba(54, 162, 235, 0.2)', fill: true }] },
+            options: chartOptions
+        });
+
+        const diskChart = new Chart(document.getElementById('diskChart').getContext('2d'), {
+            type: 'line',
+            data: { labels: [], datasets: [{ label: 'Disk Usage (%)', data: [], borderColor: '#ffce56', backgroundColor: 'rgba(255, 206, 86, 0.2)', fill: true }] },
+            options: chartOptions
+        });
+
+        const networkChart = new Chart(document.getElementById('networkChart').getContext('2d'), {
+            type: 'line',
+            data: { labels: [], datasets: [
+                { label: 'Network Sent (Bytes)', data: [], borderColor: '#4bc0c0', backgroundColor: 'rgba(75, 192, 192, 0.2)', fill: true },
+                { label: 'Network Received (Bytes)', data: [], borderColor: '#9966ff', backgroundColor: 'rgba(153, 102, 255, 0.2)', fill: true }
+            ] },
+            options: chartOptions
+        });
+
+        // Update charts with incoming data
+        socket.on('system_metrics', (data) => {
+            const timestamp = new Date().toLocaleTimeString();
+
+            // Update CPU Chart
+            cpuChart.data.labels.push(timestamp);
+            cpuChart.data.datasets[0].data.push(data.cpu);
+            if (cpuChart.data.labels.length > 20) cpuChart.data.labels.shift();
+            cpuChart.update();
+
+            // Update Memory Chart
+            memoryChart.data.labels.push(timestamp);
+            memoryChart.data.datasets[0].data.push(data.memory);
+            if (memoryChart.data.labels.length > 20) memoryChart.data.labels.shift();
+            memoryChart.update();
+
+            // Update Disk Chart
+            diskChart.data.labels.push(timestamp);
+            diskChart.data.datasets[0].data.push(data.disk);
+            if (diskChart.data.labels.length > 20) diskChart.data.labels.shift();
+            diskChart.update();
+
+            // Update Network Chart
+            networkChart.data.labels.push(timestamp);
+            networkChart.data.datasets[0].data.push(data.network.sent);
+            networkChart.data.datasets[1].data.push(data.network.recv);
+            if (networkChart.data.labels.length > 20) networkChart.data.labels.shift();
+            networkChart.update();
+        });
+    </script>
+</body>
+</html>

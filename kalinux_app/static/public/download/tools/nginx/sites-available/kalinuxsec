@@ -1,0 +1,62 @@
+server {
+    listen 80;
+    server_name kalinux-development.net.ru www.kalinux-development.net.ru;
+
+    # Redirect HTTP to HTTPS
+    if ($host = www.kalinux-development.net.ru) {
+        return 301 https://$host$request_uri;
+    }
+    if ($host = kalinux-development.net.ru) {
+        return 301 https://$host$request_uri;
+    }
+    return 404; # Default response for unhandled HTTP requests
+}
+
+    listen 443 ssl;
+    server_name kalinux-development.net.ru www.kalinux-development.net.ru;
+
+    ssl_certificate /etc/letsencrypt/live/kalinux-development.net.ru/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/kalinux-development.net.ru/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    location / {
+        include proxy_params;
+        proxy_pass http://127.0.0.1:80; # Forward to Apache
+        # Uncomment for Unix socket: proxy_pass http://unix:/var/www/kalinuxsec/akalia_dev/kalidev.sock;
+
+        # Security headers
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+        add_header Cache-Control "public, immutable";
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+        add_header Referrer-Policy "no-referrer" always;
+    }
+
+    location /static/ {
+        alias /var/www/kalinuxsec/akalia_dev/aka_app/static/;
+    }
+
+    location /secure/ {
+        auth_basic "Restricted Area";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+        alias /var/www/kalinuxsec/akalia_dev/aka_app/templates/secure/;
+    }
+
+    # Deny sensitive files
+    location ~ /\.(ht|git|env) {
+        deny all;
+    }
+
+    location ~* \.(php|pl|py|sh)$ {
+        deny all;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    try_files $uri $uri/ =404;
+}

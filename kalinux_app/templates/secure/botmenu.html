@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KaliDev Security Bot - Automate your security tasks">
+  <title>KaliDev Security Bot</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/botmenu.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <h1>KaliDev Bot</h1>
+    </div>
+    <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#terminal">Terminal</a></li>
+    </ul>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- About Section -->
+    <section id="about" class="about-section">
+      <h2>About</h2>
+      <p>Welcome to KaliDev Security Bot! Your one-stop solution for automated security tasks.</p>
+      <a href="https://t.me/kalidev_securitybot" class="btn">Open Bot</a>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+      <h2>Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>🔑 Enter API</h3>
+          <p>Provide your API token for full functionality.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💻 Install Application</h3>
+          <p>Set up the app to access advanced features.</p>
+        </div>
+        <div class="feature-card">
+          <h3>ℹ Information</h3>
+          <p>Get detailed instructions and documentation.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📋 Commands List</h3>
+          <p>View all available commands for the bot.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📚 Quick Start Guide</h3>
+          <p>Learn how to use the bot in a few simple steps.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🛠 Server Management</h3>
+          <p>Access server tools and settings.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Terminal Section -->
+    <section id="terminal" class="terminal-section">
+      <h2>Simulated Terminal</h2>
+      <div class="terminal">
+        <div id="terminal-output">
+          <p class="typing-effect">Welcome to KaliDev Security Bot!</p>
+          <p>$ Type "help" for options...</p>
+        </div>
+        <input type="text" id="terminal-input" placeholder="Type a command...">
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2024 KaliDev. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Mobile navigation toggle
+    document.getElementById('nav-toggle').addEventListener('click', () => {
+      document.getElementById('nav-links').classList.toggle('show');
+    });
+
+    // Terminal interaction
+    const terminalInput = document.getElementById('terminal-input');
+    const terminalOutput = document.getElementById('terminal-output');
+
+    terminalInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const command = terminalInput.value.trim();
+        const output = document.createElement('p');
+        output.textContent = `$ ${command}`;
+        terminalOutput.appendChild(output);
+
+        const response = document.createElement('p');
+        response.textContent = command === 'help' ? 'Available commands: help, about, exit' : `Command "${command}" not found.`;
+        terminalOutput.appendChild(response);
+
+        terminalInput.value = '';
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+      }
+    });
+  </script>
+  <script src="botmenu.js"></script>
+</body>
+ <div class="bottom-menu">
+    <a href="#" class="bottom-menu-item" id="menu-button">
+    <img src="/static/images/5.png" alt="Menu Icon">
+  </a>
+ </div>
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-menu" id="popup-menu">
+    <button id="close-button" class="close-button">Закрыть</button> 
+    <ul>
+       <li><a href="/secure/dashpanelda.html">Управление сервером</a></li>
+       <li><a href="/">Выйти...</a></li>
+       <li><a href="/tutorial">Помощь</a></li>
+    </ul>
+<script>
+const menuButton = document.getElementById('menu-button');
+const menuOverlay = document.getElementById('popup-overlay');
+const closeButton = document.getElementById('close-button');
+
+// Open the menu
+menuButton.addEventListener('click', () => {
+  menuOverlay.classList.add('active'); // Show the popup
+});
+
+// Close the menu when clicking the "Close" button
+closeButton.addEventListener('click', () => {
+  menuOverlay.classList.remove('active'); // Hide the popup
+});
+
+// Close the menu when clicking outside the popup
+menuOverlay.addEventListener('click', (e) => {
+  if (e.target === menuOverlay) {
+    menuOverlay.classList.remove('active'); // Hide the popup
+  }
+});
+</script>
+   </div>
+ </div>
+</html>

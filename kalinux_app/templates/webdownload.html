@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalinux | Security</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Скачайте Kalinux Security</h1>
+        <p>Усилите защиту и контроль над сервером с помощью передового решения Kalinux Security.</p>
+    </header>
+
+    <main>
+        <section class="download-section">
+            <h2>Скачать приложение</h2>
+            <p>Нажмите на кнопку ниже, чтобы скачать пакет Kalinux Security и начать установку прямо сейчас.</p>
+            <a href="/static/public/download/kalinux_security_debian_x64x86.tar.gz" class="download-button" download>Скачать Kalinux Security</a>
+        </section>
+
+        <section class="about-project">
+            <h2>Kalinux Security — Комплексная Платформа Защиты Серверов</h2>
+            <p>Kalinux Security — это высокотехнологичная и мощная система безопасности для управления и анализа серверного трафика, созданная для профессионалов в области IT, системных администраторов и UNIX-пользователей.</p>
+            
+            <p>С её помощью можно выполнять непрерывный мониторинг состояния системы, анализировать логи и автоматизировать процесс выявления уязвимостей. Платформа интегрирует надёжные инструменты защиты, включая iptables и fail2ban, а также сканеры безопасности Lynis, Rkhunter и другие.</p>
+        
+            <p>### Ключевые Функции Kalinux Security:</p>
+            <ul>
+                <li><strong>Мониторинг Системы</strong> — Отслеживание производительности и безопасности в реальном времени.</li>
+                <li><strong>Анализ Логов</strong> — Глубокий анализ системных логов для обнаружения подозрительной активности.</li>
+                <li><strong>Автоматизация Защиты</strong> — Интеграция с fail2ban для автоматического реагирования на атаки и уязвимости.</li>
+                <li><strong>Сканирование Уязвимостей</strong> — Инструменты Lynis и Rkhunter для глубокого анализа безопасности системы.</li>
+            </ul>
+        
+            <h3>Инструменты безопасности</h3>
+            <p>Наш продукт упрощает настройку и управление правилами iptables, добавляя полезные функции, такие как уведомления, блокировка подозрительных IP-адресов и мгновенные оповещения через Telegram. Используя автоматизацию, можно настроить полную блокировку злонамеренного трафика без лишних трудозатрат.</p>
+        
+            <h2>Гайд по Установке и Настройке</h2>
+            <ol>
+                <li>
+                    <strong>Подготовка Серверного Окружения</strong>
+                    <p>Платформа поддерживает работу на Debian 12 с обязательной установкой Nginx и Python. Рекомендуется настройка Gunicorn для запуска приложения.</p>
+                </li>
+                <li>
+                    <strong>Загрузка и Установка Kalinux Security</strong>
+                    <p>Скачайте проект с GitHub и установите зависимости через команду:</p>
+                    <pre><code>git clone https://github.com/toxaker/kalinux_security && cd kalinux_security && pip install -r requirements.txt</code></pre>
+                </li>
+                <li>
+                    <strong>Конфигурация API и Параметров Безопасности</strong>
+                    <p>Настройте переменные окружения, необходимые для API, а также ключи для защиты данных в <code>.env</code> файле.</p>
+                </li>
+                <li>
+                    <strong>Запуск Сервиса и Конфигурация Nginx</strong>
+                    <p>Для стабильной работы используйте Gunicorn для запуска:</p>
+                    <pre><code>gunicorn -w 4 -b 127.0.0.1:8000 wsgi:app</code></pre>
+                    <p>После запуска настройте проксирование на Nginx для перенаправления запросов на приложение.</p>
+                </li>
+                <li>
+                    <strong>Тестирование и Отладка</strong>
+                    <p>После установки рекомендуется протестировать работу сервиса и убедиться в корректности конфигурации с использованием команд:</p>
+                    <pre><code>sudo systemctl restart nginx && sudo systemctl status gunicorn</code></pre>
+                    <p>Для мониторинга активности и выявления ошибок используйте логи Gunicorn и Nginx.</p>
+                </li>
+            </ol>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Kalinux | Security. Поддержка: <a href="mailto:kalinux@hacking.net.ru">Свяжитесь с нами</a></p>
+    </footer>
+
+    <div class="bottom-menu">
+        <a href="#" class="bottom-menu-item" id="menu-button" aria-label="Открыть меню">
+            <img src="/static/images/5.png" alt="Иконка меню">
+        </a>
+    </div>
+
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="popup-menu" id="popup-menu">
+            <button id="close-button" class="close-button">Закрыть</button>
+            <ul>
+                <li><a href="/secure/dashpanelda.html">Войти...</a></li>
+                <li><a href="/letsgoauth">Пройти авторизацию...</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const menuButton = document.getElementById('menu-button');
+        const menuOverlay = document.getElementById('popup-overlay');
+        const closeButton = document.getElementById('close-button');
+
+        // Open the menu
+        menuButton.addEventListener('click', () => {
+            menuOverlay.classList.add('active'); // Show the popup
+        });
+
+        // Close the menu when clicking the "Close" button
+        closeButton.addEventListener('click', () => {
+            menuOverlay.classList.remove('active'); // Hide the popup
+        });
+
+        // Close the menu when clicking outside the popup
+        menuOverlay.addEventListener('click', (e) => {
+            if (e.target === menuOverlay) {
+                menuOverlay.classList.remove('active'); // Hide the popup
+            }
+        });
+    </script>
+</body>
+</html>

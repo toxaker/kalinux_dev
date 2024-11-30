@@ -1,0 +1,73 @@
+/* General Layout */
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+}
+
+.dark-header {
+    text-align: center;
+    padding: 20px;
+    background: #1e1e2e;
+    border-radius: 12px;
+}
+
+.grid-container {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+.tool-form {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.tool-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.tool-form input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: #1e1e2e;
+    color: #fff;
+}
+
+.result-container {
+    margin-top: 20px;
+    padding: 10px;
+    background: #1e1e2e;
+    border-radius: 8px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #0055ff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0044cc;
+}
+
+/* Footer */
+.dark-footer {
+    text-align: center;
+    padding: 20px;
+    background: #1e1e2e;
+    border-top: 2px solid #0055ff;
+}

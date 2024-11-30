@@ -1,0 +1,238 @@
+[INCLUDES]
+
+before = paths-debian.conf
+
+
+[DEFAULT]
+bantime = 30m
+bantime.increment = true
+bantime.factor = 3
+bantime.maxtime = 48h
+bantime.overalljails = true
+findtime = 10m
+maxretry = 3
+maxmatches = %(maxretry)s
+logencoding = auto
+enabled = true
+mode = normal
+filter = %(__name__)s[mode=%(mode)s]
+chain = <known/chain>
+port = 0:65535
+fail2ban_agent = Fail2Ban/%(fail2ban_version)s
+banaction = iptables-multiport
+banaction_allports = iptables-allports
+action = %(action_)s
+ignoreip = 127.0.0.1/8 ::1 185.204.1.213 0.0.0.0 127.0.1.1/8 77.222.32.8/24
+backend = auto
+usedns = warn
+
+[web-app-attack]
+enabled = true
+filter = web-app-attack
+logpath = /var/log/nginx/access.log
+maxretry = 2
+findtime = 15m
+bantime = 12h
+action = %(banaction_allports)s
+
+
+[malicious-user-agents]
+enabled = true
+filter = malicious-user-agents
+logpath = /var/log/nginx/access.log
+maxretry = 1
+findtime = 10m
+bantime = 48h
+action = %(banaction_allports)s
+
+
+[sensitive-files]
+enabled = true
+filter = sensitive-files
+logpath = /var/log/nginx/access.log
+maxretry = 1
+findtime = 10m
+bantime = 24h
+action = %(banaction_allports)s
+
+
+[mining-attack]
+enabled = true
+filter = mining-attack
+logpath = /var/log/nginx/access.log
+maxretry = 1
+findtime = 10m
+bantime = 24h
+action = %(banaction_allports)s
+
+
+[apache-auth]
+enabled = true
+filter = apache-auth
+logpath = /var/log/apache2/access.log
+maxretry = 3
+findtime = 10m
+bantime = 1h
+action = %(banaction_allports)s
+
+[apache-badbots]
+enabled = true
+port = http,https
+logpath = /var/log/apache2/access.log
+maxretry = 1
+findtime = 1h
+bantime = 48h
+action = %(banaction_allports)s
+
+[apache-noscript]
+enabled = true
+port = http,https
+logpath = /var/log/apache2/access.log
+maxretry = 5
+findtime = 10m
+bantime = 2h
+action = %(banaction_allports)s
+
+[apache-overflows]
+enabled = true
+port = http,https
+logpath = /var/log/apache2/error.log
+maxretry = 2
+findtime = 10m
+bantime = 2h
+action = %(banaction_allports)s
+
+[apache-nohome]
+enabled = true
+port = http,https
+logpath = /var/log/apache2/error.log
+maxretry = 2
+findtime = 10m
+bantime = 2h
+action = %(banaction_allports)s
+
+[apache-botsearch]
+enabled = true
+port = http,https
+logpath = /var/log/apache2/error.log
+maxretry = 2
+findtime = 10m
+bantime = 2h
+action = %(banaction_allports)s
+
+#[apache-fakegooglebot]
+#enabled = true
+#port = http,https
+#logpath = /var/log/apache2/error.log
+#maxretry = 1
+#findtime = 1h
+#bantime = 24h
+#ignorecommand = %(ignorecommands_dir)s/apache-fakegooglebot <ip>
+#action = %(banaction_allports)s
+
+[nginx-limit-req]
+enabled = true
+port = http,https
+filter = nginx-limit-req
+logpath = /var/log/nginx/error.log
+maxretry = 5
+findtime = 10m
+bantime = 1h
+action = %(banaction_allports)s
+
+[sshd]
+enabled = true
+port = 16661
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 3
+findtime = 10m
+bantime = 2h
+action = %(banaction_allports)s
+
+[nginx-secure-location]
+enabled = true
+port = http,https
+logpath = /var/log/nginx/access.log
+filter = nginx-secure
+maxretry = 3
+findtime = 10m
+bantime = 2h
+action = %(banaction_allports)s
+
+[nginx-botsearch]
+enabled = true
+port = http,https
+logpath = %(nginx_error_log)s
+maxretry = 2
+findtime = 10m
+bantime = 2h
+action = %(banaction_allports)s
+
+[php-url-fopen]
+enabled = true
+port = http,https
+logpath = %(nginx_access_log)s
+          %(apache_access_log)s
+maxretry = 2
+findtime = 10m
+bantime = 2h
+action = %(banaction_allports)s
+
+#[gitlab]
+#enabled = true
+#port = http,https
+#logpath = /var/log/gitlab/gitlab-rails/application.log
+#maxretry = 3
+#findtime = 10m
+#bantime = 2h
+#action = %(banaction_allports)s
+
+#[grafana]
+#enabled = true
+#port = http,https
+#logpath = /var/log/grafana/grafana.log
+#maxretry = 3
+#findtime = 10m
+#bantime = 2h
+#action = %(banaction_allports)s
+
+[nginx-http-auth]
+enabled = true
+port = http,https
+logpath = /var/log/nginx/access.log
+filter = nginx-http-auth
+maxretry = 3
+findtime = 10m
+bantime = 1h
+action = %(banaction_allports)s
+
+[nginx-nohome]
+enabled = true
+port = http,https
+logpath = /var/log/nginx/access.log
+filter = nginx-nohome
+maxretry = 2
+findtime = 10m
+bantime = 1h
+action = %(banaction_allports)s
+
+[nginx-noscript]
+enabled = true
+port = http,https
+logpath = /var/log/nginx/access.log
+filter = nginx-noscript
+maxretry = 2
+findtime = 10m
+bantime = 1h
+action = %(banaction_allports)s
+
+[nginx-badbots]
+enabled = true
+port = http,https
+logpath = /var/log/nginx/access.log
+filter = nginx-badbots
+maxretry = 1
+findtime = 1h
+bantime = 1h
+action = %(banaction_allports)s

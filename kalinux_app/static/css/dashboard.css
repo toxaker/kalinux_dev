@@ -1,0 +1,135 @@
+/* General */
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    color: #ffffff;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Header */
+.dark-header {
+    text-align: center;
+    padding: 20px;
+    background-color: #1e1e2e;
+    border-radius: 12px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #0055ff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0044cc;
+}
+
+/* Containers and Cards */
+.grid-container {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+.grid-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.summary-card {
+    background-color: #1e1e2e;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.summary-card p {
+    color: #b3b3b3;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #1e1e2e;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    color: #ffffff;
+}
+
+table th {
+    background-color: #2c2c3e;
+    cursor: pointer;
+}
+
+table tr:nth-child(even) {
+    background-color: #2c2c3e;
+}
+
+/* Popup Menu */
+.popup-menu {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
+    background: #1e1e2e;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.popup-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.popup-menu ul li {
+    margin: 15px 0;
+}
+
+.popup-menu ul li a {
+    color: white;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+.popup-menu ul li a:hover {
+    color: #f39c12;
+}

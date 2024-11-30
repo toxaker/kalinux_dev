@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalinux | Security</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        #hidden-link, #honeypot-container, #invisible-field {
+            display: none;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+<div id="preloader">
+    <div class="preloader-content">
+        <img src="{{ url_for('static', filename='images/preloader.png') }}" alt="Kalinux Logo" class="preloader-logo">
+        <div class="spinner"></div>
+    </div>
+</div>
+<script>
+    window.addEventListener("load", function () {
+        const preloader = document.getElementById("preloader");
+
+        const minDuration = 2500;
+
+        const loadTime = performance.now();
+
+        const delay = Math.max(0, minDuration - loadTime);
+
+        setTimeout(() => {
+            preloader.style.opacity = "0"; // Начинаем затухание
+            setTimeout(() => preloader.style.display = "none", 500);
+        }, delay);
+    });
+</script>
+    <header>
+        <div class="header-content">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Kalinux Logo" class="logo">
+            <h1>Kalinux | Security</h1>
+        </div>
+    </header>
+    <main>
+        <h1>BOTS STOP HERE</h1>
+        <div class="container">
+            <div class="captcha-section">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="captcha-checkbox" onclick="toggleButton()">
+                    <span class="checkmark"></span> Но я не бот...
+                </label>
+                <button id="login-button" class="login-button" disabled onclick="redirectToHome()">Войти...</button>
+            </div>
+            <div id="honeypot-container">
+                <form id="login-form" action="/loginadmin" method="post" onsubmit="return checkHoneypot();">
+                    <input type="text" name="username" placeholder="Введите имя пользователя" required>
+                    <input type="password" name="password" placeholder="Введите пароль" required>
+                    <input type="text" id="honeypot" name="honeypot" style="position: absolute; left: -9999px;">
+                    <button type="submit"Войти></button>
+                </form>
+            </div>
+            <a href="/trap" id="hidden-link"><p Ловушка для бота></p></a>
+        </div>
+    </main>
+    <footer>
+        <div class="page-footer">
+            <p>© 2024 GNU General Public License v3.0. Авторство: <a href="https://t.me/toxaking">А.К.А</a>. Исходный код доступен на <a href="https://github.com/toxaker/">GitHub</a>. Там же можно ознакомиться с особенностями, затрагиваемыми данной лицензией.</p>
+        </div>
+    </footer>
+    <script>
+        function checkHoneypot() {
+            const honeypot = document.getElementById("honeypot").value;
+            if (honeypot !== "") {
+                alert("Обнаружен бот!");
+                return false;
+            }
+            return true;
+        }
+
+        // Captcha logic
+        function toggleButton() {
+            const checkbox = document.getElementById('captcha-checkbox');
+            const button = document.getElementById('login-button');
+            if (checkbox.checked) {
+                button.disabled = false;
+            } else {
+                button.disabled = true;
+            }
+        }
+
+        function redirectToHome() {
+            if (!document.getElementById('login-button').disabled) {
+                window.location.href = '/home';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>Tools Menu</title>
+</head>
+<body>
+    <h1>Tools Menu</h1>
+
+<form id="scan-form">
+    <label>Scan Type:</label>
+    <select name="scan_type" required>
+        <option value="ping">Ping</option>
+        <option value="traceroute">Traceroute</option>
+        <option value="port_scan">Port Scan</option>
+        <option value="nikto">Nikto Scan</option>
+        <option value="whois">WHOIS Lookup</option>
+        <option value="ssl_checker">SSL Checker</option>
+    </select>
+    <label>Target (IP or Domain):</label>
+    <input type="text" name="target" placeholder="e.g., 8.8.8.8 or example.com" required>
+    <button type="submit">Start Scan</button>
+</form>
+<div class="spinner" id="scan-spinner"></div>
+<pre id="scan-result"></pre>
+
+    <div class="section">
+        <h2>Server Monitoring</h2>
+        <button id="refresh-status">Refresh Status</button>
+        <div class="spinner" id="status-spinner"></div>
+        <pre id="server-status"></pre>
+    </div>
+
+    <!-- Process Management -->
+    <div class="section">
+        <h2>Process Management</h2>
+        <button id="list-processes">List Processes</button>
+        <div class="spinner" id="process-spinner"></div>
+        <table id="process-table">
+            <thead>
+                <tr>
+                    <th>PID</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        const scanForm = document.getElementById('scan-form');
+        const scanSpinner = document.getElementById('scan-spinner');
+        const scanResult = document.getElementById('scan-result');
+        
+        scanForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            scanSpinner.style.display = 'block';
+            scanResult.textContent = '';
+            
+            const formData = new FormData(scanForm);
+            const response = await fetch('/api/scan', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            scanSpinner.style.display = 'none';
+            scanResult.textContent = result.output || result.error;
+        });
+
+        const refreshStatus = async () => {
+            const spinner = document.getElementById('status-spinner');
+            const status = document.getElementById('server-status');
+            spinner.style.display = 'block';
+            status.textContent = '';
+
+            const response = await fetch('/api/server_status');
+            const result = await response.json();
+            spinner.style.display = 'none';
+            status.textContent = JSON.stringify(result, null, 2);
+        };
+
+        const listProcesses = async () => {
+            const spinner = document.getElementById('process-spinner');
+            const tableBody = document.getElementById('process-table').querySelector('tbody');
+            spinner.style.display = 'block';
+            tableBody.innerHTML = '';
+
+            const response = await fetch('/api/processes');
+            const result = await response.json();
+            spinner.style.display = 'none';
+            result.processes.forEach(p => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${p.pid}</td>
+                    <td>${p.name}</td>
+                    <td>
+                        <button onclick="killProcess(${p.pid})">Kill</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        };
+
+        document.getElementById('refresh-status').addEventListener('click', refreshStatus);
+        document.getElementById('list-processes').addEventListener('click', listProcesses);
+
+        const killProcess = async (pid) => {
+            const response = await fetch('/api/processes', {
+                method: 'POST',
+                body: new URLSearchParams({ action: 'kill', pid })
+            });
+            const result = await response.json();
+            alert(result.message || result.error);
+            listProcesses();
+        };
+    </script>
+</body>
+</html>
