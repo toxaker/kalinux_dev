@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="/static/images/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg" />
+    <link rel="shortcut icon" href="/static/images/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="./kalinux.dev" />
+    <link rel="manifest" href="/static/images/site.webmanifest" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalinux | Security</title>
     <link rel="stylesheet" href="/static/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         #hidden-link, #honeypot-container, #invisible-field {
@@ -15,7 +20,6 @@
         }
     </style>
 </head>
-<body>
 <div id="preloader">
     <div class="preloader-content">
         <img src="{{ url_for('static', filename='images/preloader.png') }}" alt="Kalinux Logo" class="preloader-logo">
@@ -33,17 +37,46 @@
         const delay = Math.max(0, minDuration - loadTime);
 
         setTimeout(() => {
-            preloader.style.opacity = "0"; // Начинаем затухание
-            setTimeout(() => preloader.style.display = "none", 500);
+            preloader.style.opacity = "0";
+            setTimeout(() => preloader.style.display = "none", 1000);
         }, delay);
     });
 </script>
+<div class=placeholder>
+<p></p>
+</div>
     <header>
         <div class="header-content">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Kalinux Logo" class="logo">
             <h1>Kalinux | Security</h1>
         </div>
     </header>
+    <div class="theme-switch-container">
+        <div class="theme-switch">
+            <div class="toggle" id= "themeToggle"><span>LIGHT</span><span>DARK</span></div>
+        </div>
+    </div>
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        toggle.addEventListener('click', () => {
+            const isDark = body.classList.toggle('dark-theme');
+            body.classList.toggle('light-theme', !isDark);
+            toggle.classList.toggle('active', isDark);
+        });
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.classList.add(savedTheme === 'dark' ? 'dark-theme' : 'light-theme');
+            toggle.classList.toggle('active', savedTheme === 'dark');
+        }
+
+        toggle.addEventListener('click', () => {
+            const theme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+    </script>
+<body>
     <main>
         <h1>BOTS STOP HERE</h1>
         <div class="container">

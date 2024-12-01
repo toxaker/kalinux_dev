@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <title>Kalinux | Продинутая платформа безопасности</title>
+    <link rel="icon" type="image/png" href="/static/images/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg" />
+     <link rel="shortcut icon" href="/static/images/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="./kalinux.dev" />
+    <link rel="manifest" href="/static/images/site.webmanifest" />    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalinux | Продвинутая платформа безопасности</title>
     <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/inspiration.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="/static/images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/static/css/style2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="/static/images/favicon.ico" type="image/png">
 </head>
 <body>
-    <header class="main-header">
+    <header class="animated-header">
+        <div class="header-content">
+            <a id="logo" href="https://www.kali.org/" style="background-image:url(https://www.kali.org/images/kali-logo.svg)"></a>
+            <img src="/static/images/logo.svg" alt="Logo" class="logo" type="svg">
+            <h1>Kalinux Security Project</h1>
+        </div>
         <div class="container">
-            <a href="/" class="logo">
-                <img src="/static/images/logo.svg" alt="Логотип Kalinux">
-            </a>
             <nav>
                 <ul class="nav-links">
                     <li><a href="#about">О проекте</a></li>
@@ -26,7 +34,13 @@
         </div>
     </header>
     <main>
-
+  <div class="theme-switch-container">
+        <div class="theme-switch">
+            <span>LIGHT</span>
+            <div class="toggle" id="themeToggle"></div>
+            <span>DARK</span>
+        </div>
+    </div>
         <section class="hero-section">
             <div class="container">
                 <h1>Kalinux Security</h1>
@@ -101,42 +115,24 @@
     </footer>
 
     <div class="bottom-menu">
-        <a href="#" class="bottom-menu-item" id="menu-button" aria-label="Открыть меню">
-            <img src="/static/images/5.png" alt="Иконка меню">
+        <a href="#" class="bottom-menu-item" id="menu-button">
+            <img src="/static/images/5.png" alt="Menu Icon">
         </a>
     </div>
 
     <div class="popup-overlay" id="popup-overlay">
-        <div class="popup-menu" id="popup-menu">
+        <div class="popup-menu">
             <button id="close-button" class="close-button">Закрыть</button>
             <ul>
                 <li><a href="/secure/dashpanelda.html">Войти...</a></li>
-                <li><a href="/letsgoauth">Пройти авторизацию...</a></li>
+                <li><a href="/letsgoauth">Авторизация...</a></li>
+                <li><a href="/webdownload">Установить(!)</a></li>
+                <li><a href="/dashpanel">Предпросмотр [NEW!]</a></li>
+                <li><a href="/contactus">Поддержка клиентов</a></li>
+                <li><a href="/tutorial">Инструкция и ответы на вопросы</a></li>
             </ul>
         </div>
     </div>
-
-    <script>
-        const menuButton = document.getElementById('menu-button');
-        const menuOverlay = document.getElementById('popup-overlay');
-        const closeButton = document.getElementById('close-button');
-
-        // Открыть меню
-        menuButton.addEventListener('click', () => {
-            menuOverlay.classList.add('active'); // Показать всплывающее окно
-        });
-
-        // Закрыть меню при нажатии на "Закрыть"
-        closeButton.addEventListener('click', () => {
-            menuOverlay.classList.remove('active'); // Скрыть всплывающее окно
-        });
-
-        // Закрыть меню при нажатии вне области меню
-        menuOverlay.addEventListener('click', (e) => {
-            if (e.target === menuOverlay) {
-                menuOverlay.classList.remove('active'); // Скрыть всплывающее окно
-            }
-        });
-    </script>
+    <script src="/static/js/dashpanel.js"></script>
 </body>
 </html>

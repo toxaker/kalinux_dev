@@ -15,8 +15,12 @@ fi
 read -p "Enter the package name: " PACKAGE_NAME
 
 # Step 1: Create a directory under /var/www/ and move into it
-TARGET_DIR="/var/www/$PACKAGE_NAME"
-mkdir -p "$TARGET_DIR"
+mkdir -p /var/www/"$PACKAGE_NAME"
+
+TARGET_DIR=/var/www/"$PACKAGE_NAME"
+
+tar -xf "$PACKAGE_NAME" "TARGET_DIR"
+
 cd "$TARGET_DIR"
 
 echo "Created and moved to directory: $TARGET_DIR"

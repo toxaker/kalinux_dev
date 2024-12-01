@@ -14,10 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById(elementId).innerHTML = `<pre>${JSON.stringify(result, null, 2)}</pre>`;
     }
 
-    /**
-     * Form Submission Handler
-     * Generalized handler for submitting forms to specified endpoints.
-     */
+
     function handleFormSubmit(formId, endpoint, resultId, renderFunction) {
         document.getElementById(formId).addEventListener('submit', function (event) {
             event.preventDefault();
@@ -46,9 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    /**
-     * Render Functions for Each Tool
-     */
+
     function renderIpInfo(data, resultId) {
         document.getElementById(resultId).innerHTML = `
             <h3>IP Info:</h3>
@@ -84,9 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <pre>${data.output}</pre>`;
     }
 
-    /**
-     * Bind Forms to Endpoints
-     */
+
     handleFormSubmit('portScannerForm', '/scan_ports', 'scanResult', renderScanResult);
     handleFormSubmit('add-rule-form', '/add_rule', 'alert', renderResult);
     handleFormSubmit('remove-rule-form', '/remove_rule', 'alert', renderResult);
@@ -224,3 +217,69 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+const toggleButton = document.getElementById('theme-toggle');
+const app = document.getElementById('app');
+
+toggleButton.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  if (currentTheme === 'light') {
+    document.documentElement.removeAttribute('data-theme');
+    toggleButton.textContent = 'Сменить тему';
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    toggleButton.textContent = 'Вернуть тему';
+  }
+});
+
+// Fade-in Effect on Scroll
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  },
+  { threshold: 0.1 }
+);
+
+sections.forEach((section) => {
+  observer.observe(section);
+});
+
+window.Telegram.WebApp.ready();
+const userInfo = Telegram.WebApp.initDataUnsafe.user;
+const userElement = document.getElementById('user-info');
+userElement.innerHTML = `Hello, ${userInfo.first_name} ${userInfo.last_name}`;
+document.getElementById('send-data-btn').addEventListener('click', () => {
+    const data = { message: "User clicked the button!" };
+    Telegram.WebApp.sendData(JSON.stringify(data));
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    function displayError(errorMessage, elementId) {
+        document.getElementById(elementId).innerHTML = `<div class="error">${errorMessage}</div>`;
+    }
+
+    function displayLoader(elementId) {
+        document.getElementById(elementId).innerHTML = `<div class="loading">Загрузка...</div>`;
+    }
+});
+
+function sendDataToServer() {
+    const message = document.getElementById('message').value;
+    const initData = Telegram.WebApp.initData;
+
+            fetch('/submit_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message, initData: initData }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Server response:', data);
+            });
+        }
